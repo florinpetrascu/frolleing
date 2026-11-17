@@ -129,12 +129,24 @@ sensor:
     unit_of_measurement: "h"
     value_type: U_WORD
 
+  
+  - platform: modbus_controller
+    modbus_controller_id: ${modbus_controller_id}
+    name: "${name} Kesselzustand"
+    id: ${name}_Kesselzustand
+    register_type: read
+    address: 2
+    value_type: U_WORD
+    register_count: 1
+
+
+
 binary_sensor:
   - platform: template
     name: "${name} Kesselzustand Heizen"
     id: ${name}_Kesselzustand_Heizen
     lambda: |-
-      if (id(${name}_Kesselzustand).state == "Heizen") {
+      if (id(${name}_Kesselzustand).state == 1) {
         return true;
       } else {
         return false;
